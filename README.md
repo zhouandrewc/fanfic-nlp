@@ -40,7 +40,7 @@ Notebooks for scraping, preprocessing, modeling, and clustering.
 
 * [Application](app)
 
-A Streamlit app that implementing a recommender system for fanfiction. Documentation to be fleshed out.
+A Streamlit app that implementing a recommender system for fanfiction. Currently not deployed (17 November 2020) but intend to do so soon.
 
 * [Presentation](presentation)
 
