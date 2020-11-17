@@ -31,13 +31,13 @@ from streamlit.report_thread import get_report_ctx
 @st.cache(allow_output_mutation=True)
 def init():
     stopwords = pickle.load(open("../stopwords.pickle", "rb"))
-    fic_info = pickle.load(open("../fic_info_fixed.pickle", "rb"))
-    model_info = pickle.load(open("../models/model_11_topics_2.pickle", "rb"))
+    fic_info = pickle.load(open("../data/fic_info.pickle", "rb"))
+    model_info = pickle.load(open("../models/avatar_model.pickle", "rb"))
 
     model = model_info["model"]
     dictionary = model_info["dict"]
     corpus = model_info["corpus"]
-    index = Similarity.load("../sim_index_2.pickle")
+    index = Similarity.load("../models/sim_index.pickle")
     index_temp = get_tmpfile("index")
     index = Similarity(index_temp, model[corpus], num_features = model.num_topics)
     index.save("similarity_index.pickle")

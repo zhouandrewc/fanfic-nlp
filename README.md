@@ -46,6 +46,8 @@ A Streamlit app that implementing a recommender system for fanfiction. Documenta
 
 Contains the slides for the presentation I gave on my work.
 
+Note that various stored ```.pickle``` files and directories for storing those files are omitted due to lack of space.
+
 ## Acknowledgments
 
 Thanks to the awesome staff and students at Metis who were a huge help during this project.
