@@ -21,13 +21,11 @@ sleep = 5
 def get_search_mod(mod, value):
     return f"&work_search[{mod}]={value}"
 
-# date range params?
 def get_search_url(fandom, min_kudos=0, complete=True, single_only=False, crossover=False, english_only=True):
 
     base_url = "https://archiveofourown.org/works/search?utf8=✓"
 
     params = {}
-    #params["complete"]
 
     complete =  ("complete", "T" if complete else "")
     crossover = ("crossover", "" if crossover else "F")
@@ -43,7 +41,6 @@ def get_search_url(fandom, min_kudos=0, complete=True, single_only=False, crosso
     return base_url + ''.join([get_search_mod(*param) for param in params])
 
 
-# allow unlimited count
 def get_works_info(search_url, count, page=1, single_only=False, word_range=(0,0), include_adult=False, exclude_series=True, print_every=5):
     '''
     Given the URL of an AO3 search query, extracts the work ID and data for
@@ -111,7 +108,6 @@ def parse_meta_list(info_html):
         all_authors = list(map(lambda x: x.text, author_html))
     else:
         # sometimes there's no author and our find_all fails
-        # believe this is when the author is "anonymous" but needs verification
         author = "Anonymous"
         all_authors = []
         
@@ -123,25 +119,16 @@ def parse_meta_list(info_html):
     date = info_html.find(class_="datetime").text
     return {"work_id": work_id, "rating": rating, "lang": lang, "words": words, "chapters": chapters, "date": date, "series": series, "author": author, "all_authors": all_authors}
 
-# options: single chapter only, word count
-
-
-# map sentiment trend of hurt-comfort fics?
-
 def chap_html_to_str(chap_html):
     all_p = chap_html.find_all("p")
     str_arr = list(map(lambda x: str(x.text).replace("\xa0", " "), all_p))
     str_arr = [st for st in str_arr if st]
     return ' '.join(str_arr)
 
-# could select only common tags here, or just do it afterwards in cleaning
-# https://archiveofourown.org/faq/tags?language_id=en#canonicalhow
-# https://fanlore.org/wiki/AO3_Tag_Wrangling
-# try to associate tags with canonical tags
-
-# perhaps include an option to do by chapter
 def scrape_fic(work_id, as_pd_series=True, no_text=False):
-    #print("getting fic", work_id)
+    '''
+    Scrape information for a single fanfiction, optionally returning as dict or Series.
+    '''
     url = 'http://archiveofourown.org/works/' + str(work_id) + "?view_full_work=true?view_adult=true"
 
     r = requests.get(url)
@@ -167,15 +154,11 @@ def scrape_fic(work_id, as_pd_series=True, no_text=False):
     
     meta_html = soup.find(class_="meta")
     meta_info = parse_meta_fic(meta_html)
-
-    #time.sleep(sleep)
-
     
     full_dict = {"title": title, "text": chaps_clean, "author": author, "all_authors": all_authors, **meta_info}
 
     return pd.Series(full_dict) if as_pd_series else full_dict
 
-# could grab these in the other parse_meta
 def parse_meta_fic(meta_html):
     reln_tags = []
     char_tags = []
@@ -205,8 +188,13 @@ def parse_meta_fic(meta_html):
 
     return {"relationships": reln_tags, "chars": char_tags, "tags": addl_tags, "series": series}
 
-# todo: save partial results
+
 def scrape_fic_list(info_list, partial_df = None, print_every=0):
+    '''
+    Scrapes a list of fanfictions based on information from get_works_info.
+    If interrupted, returns a partial result. Can be resumed by passing in that
+    partial result on a subsequent call.
+    '''
     if print_every:
         print("beginning scrape...")
     

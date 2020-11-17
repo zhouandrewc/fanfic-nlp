@@ -1,3 +1,12 @@
+'''
+# Helper functions for preprocessing text.
+#
+# Andrew Zhou
+# 
+# Sources of code and information:
+# # https://stackoverflow.com/questions/15586721/wordnet-lemmatization-and-pos-tagging-in-python
+'''
+
 from nltk.tokenize import word_tokenize
 import spacy
 from nltk.stem import WordNetLemmatizer
@@ -7,14 +16,19 @@ import re
 from collections import Counter
 
 def clean(text):
+    '''
+    Clean the text of stray extraneous characters and whitespace.
+    '''
     clean = re.sub(r"’", "'", text)
     clean = re.sub(r"[^\w\d' ]+", '', clean)
     clean = re.sub(r" +", " ", clean)
-    # clean words with accents and such
     return clean
 
-# https://stackoverflow.com/questions/15586721/wordnet-lemmatization-and-pos-tagging-in-python
+
 def get_wordnet_pos(treebank_tag):
+    '''
+    Helper function to get part of speech, for WordNet lemmatization.
+    '''
     if treebank_tag.startswith('J'):
         return wordnet.ADJ
     elif treebank_tag.startswith('V'):
@@ -27,6 +41,9 @@ def get_wordnet_pos(treebank_tag):
         return ''
 
 def lemmatize_tokens(tokens, stopwords):
+    '''
+    Lemmatize tokens, removing stopwords.
+    '''
     lemmatizer = WordNetLemmatizer()
     tagged = map(lambda x: (x[0], get_wordnet_pos(x[1])), pos_tag(tokens))
     lemmas = [lemmatizer.lemmatize(x[0], x[1]).lower() if x[1] else lemmatizer.lemmatize(x[0]).lower() for x in tagged]
@@ -34,6 +51,16 @@ def lemmatize_tokens(tokens, stopwords):
     return lemmas
 
 def merge_ngrams(doc_lemm, ngrams, stop_after):
+    '''
+    Merge n_grams based on the parameter ngrams, which contains bigrams to
+    merge, trigrams to merge, and exceptions. The first two are ararys and the
+    last is a dict of uni-, bi-, and trigrams that should be tokenized or 
+    lemmatized in a specific way.
+    
+    Also removes stopwords in stop_after, which may be necessary if we 
+    have a bigram with a stopword in it that we removed from the stopwords list
+    so the bigram could be included.
+    '''
     doc_lemm_grams = []
     
     bigrams = ngrams["bigrams"] if "bigrams" in ngrams else []
@@ -68,6 +95,9 @@ def merge_ngrams(doc_lemm, ngrams, stop_after):
 
 
 def find_ngrams(docs, custom_stop = None, stop_exceptions = []):
+    '''
+    Finds ngrams and their frequencies in the corpus.
+    '''
     stopwords = get_stopwords(custom_stop, stop_exceptions)
     
     docs_tok_lower = [word_tokenize(clean(text).lower()) for text in docs]
@@ -85,16 +115,23 @@ def find_ngrams(docs, custom_stop = None, stop_exceptions = []):
     return c_bi, c_tri
 
 def process_text(text, ngrams={}, custom_stop=None, stop_exceptions=[], stop_after=[]):
+    '''
+    Process a document, given ngrams and stopwords.
+    '''
     stopwords = get_stopwords(custom_stop, stop_exceptions)
     return merge_ngrams(lemmatize_tokens(word_tokenize(clean(text)), stopwords), ngrams, stop_after)
 
-# docs is list (or series) of strings
 def process_texts(docs, ngrams={}, custom_stop=None, stop_exceptions=[], stop_after=[]):
-    
+    '''
+    Process a list of documents, given ngrams and stopwords.
+    '''
     stopwords = get_stopwords(custom_stop, stop_exceptions)
     return [process_text(text, ngrams, custom_stop=stopwords, stop_after=stop_after) for text in docs]
 
 def get_stopwords(custom_stop=None, stop_exceptions=[]):
+    '''
+    Construct a list of stopwords.
+    '''
     if not custom_stop:
         stop_1 = set(nltk_stopwords.words('english'))
         stop_2 = spacy.load('en_core_web_sm').Defaults.stop_words
