@@ -15,4 +15,4 @@ Our data are from the website [Archive of Our Own](http://archiveofourown.org), 
 
 ## Notes
 
-The app is currently not deployed (17 November 2020) but I'm working on doing so; I want to ensure that rehosting short snippets of text from AO3 users' fanfictions is permissible.
+The app is currently not deployed (17 November 2020) but I'm working on doing so; I want to ensure that rehosting short snippets of text from AO3 users' fanfictions is permissible. A screenshot of the app may be found in Section 5 of my [presentation](../presentation/p4_nlp_slides.pdf).
