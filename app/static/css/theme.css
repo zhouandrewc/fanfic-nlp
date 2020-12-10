@@ -1,0 +1,76 @@
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+h2 {
+  font-size: 1.2em;
+  margin: 60px 0 5px 0;
+  color: gray
+}
+
+.group text {
+  font: 11px sans-serif;
+  pointer-events: none;
+}
+
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+svg {
+  float: left;
+}
+
+#int-chars {
+  margin-bottom: 10px;
+}
+
+#interactions {
+  overflow-y: scroll;
+  height: 550px;
+}
+
+.int-table {
+  table-layout:fixed;
+  height: 800px;
+}
+
+#int-table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  word-wrap: break-word;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.legend {
+  font: 20px sans-serif;
+}
+
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 85px;
+    height: 60px;
+    padding: 2px;
+    font: 14px sans-serif;
+    background-color: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.tooltip-rect {
+  width: 130px;
+  height: 60px;
+}
+
+.col-1 {
+  width: 30px;
+}

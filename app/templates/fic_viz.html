@@ -1,0 +1,43 @@
+<!--
+
+Fanfic viz site
+Andrew Zhou
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
+  </head>
+  <body>
+
+  <div class="row">
+    <div class="column">Inter-Character Sentiments</div>
+    <div class="column" id="int-chars">Interactions:</div>
+  </div>
+  <div class="row">
+    <div class="column" id="chord"></div>
+    <div class="column" id="interactions"></div>
+  </div>
+    <div>
+      <!--<span height="1000" width="1000">
+        <div>Chord Diagram</div>
+        <div id="chord"></div>
+      </span>
+      <span>
+        <div>Interactions:</div>
+        <div>sdkj</div>
+      </span>
+      <span id="chord" height="1000" width="500"></span>
+      <span id="interactions">hello</span>-->
+    </div>
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="{{ url_for('static', filename='js/legend.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chord.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/init.js') }}" data-text="{{text}}"></script>
+
+</html>

@@ -1,28 +1,32 @@
-# "My Honor!": A Language Model for <em>Avatar: The Last Airbender</em> Fanfiction
+# "My Honor!": Natural Language Processing for Modeling <em>Avatar: The Last Airbender</em> Fanfiction
 ## by Andrew Zhou
 
-Code, data, documentation, and app for my NLP project for the Fall 2020 Metis Data Science Bootcamp.
+Code, data, documentation, and app for my NLP project (projects 4 and 5) for the Fall 2020 Metis Data Science Bootcamp.
 
 ## Problem Statement
 
-We employ NLP and unsupervised learning methods to construct a topic model for <em>Avatar: The Last Airbender</em> fanfiction. This topic model is used to cluster our fanfiction corpus and to make recommendations in our app.
-
-## Methods
-
-We train classification models, using the f<sub>0.5</sub>-score metric to evaluate performance for hyperparameter tuning and model selection.
+We employ NLP to construct a topic model and language model for <em>Avatar: The Last Airbender</em> fanfiction. We use the insights from these models to develop an application that can recommend, generate, and present visual analytics for fanfiction.
 
 ### Tools Used
 
 * NLTK
 * Spacy
 * Gensim
+* HuggingFace
+* PyTorch
+* GPT-2
+* Streamlit
+* Flask
+* d3
 
 ### Techniques Used
 
+* Non-supervised Learning
 * Latent Dirichlet Allocation (LDA)
 * Clustering
 * t-SNE
 * Content-based Recommendation
+* Fine-tuning Neural Networks
 
 ### Data
 
@@ -36,11 +40,11 @@ Utility functions for Jupyter notebooks. Includes separate routines for scraping
 
 * [Notebooks](notebooks)
 
-Notebooks for scraping, preprocessing, modeling, and clustering.
+Notebooks for scraping, preprocessing, modeling, and clustering (project 4) and text generation (project 5).
 
 * [Application](app)
 
-A Streamlit app that implementing a recommender system for fanfiction. Currently not deployed (17 November 2020) but intend to do so soon.
+A Streamlit app with a recommender, generator, and analyzer for fanfiction. Includes a separate [util](app/util) directory for utility functions for the visual analytics app.
 
 * [Presentation](presentation)
 
